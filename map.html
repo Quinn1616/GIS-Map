@@ -1,0 +1,232 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Rexburg Map</title>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.29/"></script>
+
+    <script>
+
+      require([
+        "esri/config", 
+        "esri/Map", 
+        "esri/views/MapView",
+        "esri/Graphic",
+        "esri/layers/GraphicsLayer"
+
+        ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer) {
+
+        esriConfig.apiKey = "AAPKc791b1041d22416aa25ceee96346eebecUGVLr_hpEVfAmB4K8vdNqWkdsEO8NdK2gHFpbNxiuwKI9Zd2-aw7YQ20dEzj_YM";
+        
+        const map = new Map({
+          basemap: "arcgis/topographic" //basemap styles service
+        });
+        
+        const view = new MapView({
+          map: map,
+          center: [-111.7924, 43.8231], // Longitude, latitude
+          zoom: 14, // Zoom level
+          container: "viewDiv" // Div element
+        });
+
+        const graphicsLayer = new GraphicsLayer();
+        map.add(graphicsLayer);
+
+        const points = [
+            {
+            longitude: -111.77916,
+            latitude: 43.81090,
+            Name: "Temple",
+            Description: "Rexburg South Temple"
+            }, 
+
+            {
+            longitude: -111.78165,
+            latitude: 43.81403,
+            Name: "Orchard",
+            Description: "BYU-I Orchard"
+            },
+
+            {
+            longitude: -111.78457,
+            latitude: 43.81464,
+            Name: "STC",
+            Description: "BYU-I Science & Technology Center"
+            },
+
+            {
+            longitude: -111.78320,
+            latitude: 43.81552,
+            Name: "Benson",
+            Description: "BYU-I Benson Building"
+            },
+
+            {
+            longitude: -111.78273,
+            latitude: 43.81847,
+            Name: "MC",
+            Description: "BYU-I Manwaring Student Center"
+            },
+
+            {
+            longitude: -111.78505,
+            latitude: 43.81846,
+            Name: "I-Center",
+            Description: "BYU-I Center"
+            },
+
+            {
+            longitude: -111.78597,
+            latitude: 43.81949,
+            Name: "Hart Gym",
+            Description: "BYU-I Hart Building"
+            },
+
+            {
+            longitude: -111.78537,
+            latitude: 43.82090,
+            Name: "Stadium",
+            Description: "BYU-I Stadium"
+            },
+
+            {
+            longitude: -111.79080,
+            latitude: 43.82304,
+            Name: "Porter Park",
+            Description: "Rexburg Porter Park"
+            },
+
+            {
+            longitude: -111.80683,
+            latitude: 43.83248,
+            Name: "Airport",
+            Description: "Rexburg Airport"
+            },
+
+            {
+            longitude: -111.79978,
+            latitude: 43.83501,
+            Name: "Dog Park",
+            Description: "Rexburg Dog Park"
+            },
+
+            {
+            longitude: -111.80176,
+            latitude: 43.83504,
+            Name: "Nature Park",
+            Description: "Rexburg Nature Park"
+            },
+
+            {
+            longitude: -111.78524,
+            latitude: 43.83180,
+            Name: "Rexburg Rapids",
+            Description: "Rexburg Rapids"
+            },
+
+            {
+            longitude: -111.78084,
+            latitude: 43.83615,
+            Name: "Fat Cats",
+            Description: "Rexburg Fat Cats"
+            },
+
+            {
+            longitude: -111.77407,
+            latitude: 43.85616,
+            Name: "Walmart",
+            Description: "Rexburg Walmart"
+            },
+
+            {
+            longitude: -111.77835,
+            latitude: 43.85526,
+            Name: "Temple 2",
+            Description: "Rexburg North Temple"
+            },
+
+            {
+            longitude: -111.81740,
+            latitude: 43.84055,
+            Name: "Golf Course",
+            Description: "Rexburg Teton Lakes Gold Course"
+            },
+
+            {
+            longitude: -111.78488,
+            latitude: 43.81027,
+            Name: "Sports Complex",
+            Description: "BYU-I Sports Complex"
+            },
+
+            {
+            longitude: -111.80811,
+            latitude: 43.80403,
+            Name: "Mcdonalds",
+            Description: "Rexburg South Mcdonalds"
+            },
+
+            {
+            longitude: -111.77366,
+            latitude: 43.82711,
+            Name: "Smith Park",
+            Description: "Rexburg Smith Park"
+            },
+        ]
+
+
+        const simpleMarkerSymbol = {
+            type: "simple-marker",
+            color: [226, 119, 40],  // Orange
+            outline: {
+                color: [255, 255, 255], // White
+                width: 1
+            }
+        };
+
+        points.forEach(pointInfo => {
+            const point = {
+                type: "point",
+                longitude: pointInfo.longitude,
+                latitude: pointInfo.latitude
+            };
+
+            const attributes = {
+                Name: pointInfo.Name,
+                Description: pointInfo.Description
+            };
+
+            const popupTemplate = {
+                title: "{Name}",
+                content: "{Description}"
+            };
+
+            const pointGraphic = new Graphic({
+                geometry: point,
+                symbol: simpleMarkerSymbol,
+                attributes: attributes,
+                popupTemplate: popupTemplate
+            });
+
+            graphicsLayer.add(pointGraphic);
+        });
+        
+      });
+    </script>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
